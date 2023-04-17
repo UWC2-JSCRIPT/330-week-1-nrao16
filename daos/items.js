@@ -10,15 +10,32 @@ module.exports.getAll = () => {
 }
 
 module.exports.getById = (itemId) => {
-  // TODO: complete
+  return itemsModel?.items?.find(item => item['id'] === itemId)
 }
 
 module.exports.deleteById = async (itemId) => {
-    // TODO: complete
+  const index = itemsModel?.items?.findIndex(item => item['id'] === itemId);
+
+  if (index >= 0) {
+    console.log(`found delete item at index: ${index}`);
+    const deleted = itemsModel?.items?.splice(index, 1);
+    return deleted[0];
+  }
+  else return undefined;
 }
 
 module.exports.updateById = async (itemId, newObj) => {
-    // TODO: complete
+  const index = itemsModel?.items?.findIndex(item => item['id'] === itemId);
+  if (index >= 0) {
+    console.log(`found update item at index: ${index}`);
+
+    itemsModel.items[index] = { ...newObj, id: itemsModel.items[index].id };
+
+    console.log(`updated itemsModel.items[${index}]: ${JSON.stringify(itemsModel.items[index])}`);
+
+    return itemsModel.items[index];
+  }
+  else return undefined;
 }
 
 module.exports.create = async (item) => {
